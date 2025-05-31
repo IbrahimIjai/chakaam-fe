@@ -6,21 +6,22 @@ import { siteConfig } from "@/config/site";
 import { Icons } from "./icons";
 import { Button } from "./ui/button";
 import { useTransition } from "react";
+import { authClient } from "@/lib/auth-client";
 
 function TwitterSignInButton() {
   const [isPending, startTransition] = useTransition();
 
   const handleSignIn = () => {
     startTransition(async () => {
-    //   try {
-    //     await authClient.signIn.social({
-    //       provider: "twitter",
-    //       callbackURL: "/chakam", // Redirect to /chakam after successful sign-in
-    //       errorCallbackURL: "/", // Redirect to home page if error
-    //     });
-    //   } catch (error) {
-    //     console.error("Twitter sign-in error:", error);
-    //   }
+      try {
+        await authClient.signIn.social({
+          provider: "twitter",
+          callbackURL: "/chakam", 
+          errorCallbackURL: "/", 
+        });
+      } catch (error) {
+        console.error("Twitter sign-in error:", error);
+      }
     });
   };
 
@@ -34,10 +35,10 @@ function TwitterSignInButton() {
 export function HomeNav() {
     const pathname = usePathname()
     return (
-      <nav className="flex items-center gap-6 justify-between bg-secondary-foreground p-4 rounded-2xl w-[90%] mx-auto lg:w-full">
-        <Link href="/" className="mr-4 flex items-center gap-2 lg:mr-6">
+      <nav className="fixed z-60 top-6 left-1/2 -translate-x-1/2 flex items-center gap-6 justify-between bg-secondary-foreground p-4 rounded-2xl w-[90%] lg:w-full max-w-5xl">
+        <Link href="/" className="mr-4 flex items-center gap-1 lg:mr-6">
           <Icons.logo className="h-6 w-6" />
-          <span className="hidden font-bold lg:inline-block text-white">
+          <span className="text-white">
             {siteConfig.name}
           </span>
         </Link>

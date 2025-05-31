@@ -15,6 +15,6 @@ export const auth = betterAuth({
   },
   plugins: [nextCookies()], // make sure this is the last plugin in the array
   database: prismaAdapter(prisma, {
-    provider: "sqlite",
+    provider: "postgresql",
   }),
 });
