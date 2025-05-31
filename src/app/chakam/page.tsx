@@ -1,8 +1,9 @@
+import { ChakamImagesFeed } from "@/components/chakam-images-feed";
 
 export default function Chakam() {
-    return (
-        <div>
-            <h1>Chakam</h1>
-        </div>
-    );
+  return (
+    <div>
+      <ChakamImagesFeed />
+    </div>
+  );
 }
