@@ -53,7 +53,7 @@ export function ChakamFileUploader({
       accept="image/jpeg, image/png, image/gif"
       disabled={disabled}
     >
-      <FileUploadDropzone className="border border-dashed rounded-md p-6 cursor-pointer hover:bg-muted/50 transition-colors">
+      <FileUploadDropzone className="border-3 border-dashed rounded-md p-6 cursor-pointer hover:bg-muted/50 transition-colors">
         <div className="flex flex-col items-center gap-1 text-center">
           <div className="flex items-center justify-center mb-2">
             <Icons.upload className="h-10 w-10" />

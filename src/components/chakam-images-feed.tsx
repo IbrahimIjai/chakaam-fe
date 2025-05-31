@@ -115,10 +115,9 @@ export function ChakamImagesFeed() {
         <p className="text-sm text-muted-foreground">Today</p>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        {/* Upload tile always appears in the first position */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <FileUploaderDialog>
-          <div className="border border-dashed rounded-md flex items-center justify-center p-4 h-48">
+          <div className="border-dashed border-2 rounded-md flex items-center justify-center p-4 h-48">
             <div className="flex flex-col items-center justify-center">
               <Icons.upload className="h-6 w-6" />
               <p className="text-muted-foreground text-sm">Upload Screenshot</p>
