@@ -18,17 +18,29 @@ import { useState, useEffect } from "react";
 import { z } from "zod";
 import { X, CheckCircle } from "lucide-react";
 import { Separator } from "./ui/separator";
+import { Icons } from "./icons";
+import { TweetPreview } from "./react-tweet-preview";
 
-// Image Preview component with proper cleanup
+// Utility function to extract tweet ID from Twitter URL
+function extractTweetId(url: string): string | null {
+  if (!url) return null;
+
+  // Match Twitter/X status URLs from both web and mobile apps
+  // This handles both twitter.com and x.com domains
+  // Also handles URLs with query parameters from mobile apps
+  const regex = /(?:twitter|x)\.com\/(?:#!\/)?[\w\-]+\/status\/(\d+)(?:\?.*)?$/;
+  const match = url.match(regex);
+
+  return match ? match[1] : null;
+}
+
 function ImagePreview({ file }: { file: File }) {
   const [previewUrl, setPreviewUrl] = useState<string>("");
 
   useEffect(() => {
-    // Create the preview URL
     const objectUrl = URL.createObjectURL(file);
     setPreviewUrl(objectUrl);
 
-    // Clean up the URL when component unmounts or file changes
     return () => {
       URL.revokeObjectURL(objectUrl);
     };
@@ -45,18 +57,36 @@ function ImagePreview({ file }: { file: File }) {
   );
 }
 
-// Success screen component
+function ContentPreview({
+  file,
+  twitterUrl,
+}: {
+  file?: File;
+  twitterUrl?: string;
+}) {
+  const tweetId = twitterUrl ? extractTweetId(twitterUrl) : null;
+
+  if (file) {
+    return <ImagePreview file={file} />;
+  }
+
+  if (tweetId) {
+    return (
+      <div className="border rounded-md p-3 bg-muted/30">
+        <TweetPreview tweetId={tweetId} />
+      </div>
+    );
+  }
+
+  return null;
+}
+
 function SuccessScreen({ onClose }: { onClose: () => void }) {
   return (
     <div className="py-8 flex flex-col items-center justify-center space-y-6">
-      <div className="h-16 w-16 rounded-full bg-purple-500 flex items-center justify-center">
-        <CheckCircle className="h-8 w-8 text-white" />
-      </div>
-      <h2 className="text-xl font-bold text-center">Upload Successful!</h2>
-      <Button 
-        onClick={onClose} 
-        className="w-full bg-purple-500 hover:bg-purple-600 text-white"
-      >
+      <Icons.checkmark className="h-7" />
+      <h2 className="text-lg font-bold text-center">Upload Successful!</h2>
+      <Button onClick={onClose} className="w-full">
         Check it out!
       </Button>
     </div>
@@ -69,11 +99,13 @@ const twitterUrlSchema = z
   .refine(
     (val) => {
       if (!val) return true; // Empty is valid (but will be handled separately)
+      // Updated regex to handle both twitter.com and x.com domains
+      // Also handles mobile app URLs with query parameters
       const twitterUrlRegex =
-        /^https?:\/\/(?:www\.)?twitter\.com\/(?:#!\/)?\w+\/status\/\d+/;
+        /^https?:\/\/(?:www\.)?(?:twitter|x)\.com\/(?:#!\/)?[\w\-]+\/status\/\d+(?:\?.*)?$/;
       return twitterUrlRegex.test(val);
     },
-    { message: "Please enter a valid Twitter post URL" }
+    { message: "Please enter a valid Twitter/X post URL" }
   );
 
 export function FileUploaderDialog({
@@ -88,7 +120,6 @@ export function FileUploaderDialog({
   const [showSuccess, setShowSuccess] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // Handle Twitter URL validation
   const handleTwitterUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setTwitterUrl(value);
@@ -108,18 +139,14 @@ export function FileUploaderDialog({
     }
   };
 
-  // Handle file changes from ChakamFileUploader
   const handleFilesChange = (newFiles: File[]) => {
     setFiles(newFiles);
-
-    // If files are uploaded, clear Twitter URL
     if (newFiles.length > 0) {
       setTwitterUrl("");
       setUrlError("");
     }
   };
 
-  // Determine if submit button should be enabled
   useEffect(() => {
     const hasValidUrl = twitterUrl && !urlError;
     const hasFiles = files.length > 0;
@@ -130,13 +157,11 @@ export function FileUploaderDialog({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Submitting with:", { twitterUrl, files });
-    // Show success screen
     setShowSuccess(true);
   };
-  
+
   const handleClose = () => {
     setOpen(false);
-    // Reset form after dialog is fully closed
     setTimeout(() => {
       setShowSuccess(false);
       setFiles([]);
@@ -144,15 +169,15 @@ export function FileUploaderDialog({
       setUrlError("");
     }, 300);
   };
-  
+
   const handleSuccessDone = () => {
-    setOpen(false);
+    handleClose();
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[550px] md:max-w-[650px] lg:max-w-[750px]">
+      <DialogContent className="md:max-w-[650px] lg:max-w-[750px]">
         {!showSuccess ? (
           <>
             <DialogHeader className="border-b pb-3">
@@ -160,41 +185,14 @@ export function FileUploaderDialog({
               <DialogDescription className="text-center text-xs text-blue-500 font-medium"></DialogDescription>
             </DialogHeader>
             <p className="text-left text-xs text-muted-foreground font-semibold">
-              You can only choose one option <span className="text-red-500">*</span>
+              You can only choose one option{" "}
+              <span className="text-red-500">*</span>
             </p>
             <form onSubmit={handleSubmit}>
-              <div className="space-y-6 py-4">
-                {/* Desktop/Tablet Layout - Side by side */}
-                <div className="hidden sm:flex sm:gap-6">
-                  <div className="flex-1">
-                    {files.length === 0 ? (
-                      <div className="space-y-2">
-                        <ChakamFileUploader
-                          onFilesChange={handleFilesChange}
-                          disabled={!!twitterUrl}
-                        />
-                        <div className="text-xs text-muted-foreground flex justify-between px-1">
-                          <span>Supported files: .jpg, .png, .gif</span>
-                          <span>Max file size: 10mb</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="border rounded-md p-3 h-full">
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-sm font-medium">Uploaded file</span>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-6 w-6"
-                            onClick={() => setFiles([])}
-                            type="button"
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        </div>
-                        <div className="space-y-2">
-                          <div className="text-sm text-muted-foreground">
-                            {files[0]?.name}
+              <div className="flex-1">
+                {/* Upload Section */}
+                {files.length === 0 && !twitterUrl && (
+                  <div className="space-y-2">
                     <ChakamFileUploader
                       onFilesChange={handleFilesChange}
                       disabled={!!twitterUrl}
@@ -206,8 +204,9 @@ export function FileUploaderDialog({
                   </div>
                 )}
 
+                {/* File Preview Section */}
                 {files.length > 0 && (
-                  <div className="border rounded-md p-3">
+                  <div className="border rounded-md p-3 h-full">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-sm font-medium">Uploaded file</span>
                       <Button
@@ -229,32 +228,72 @@ export function FileUploaderDialog({
                   </div>
                 )}
 
-                <div className="space-y-2">
-                  <Label htmlFor="twitter-url-mobile" className="text-sm font-medium">
+                {/* Tweet Preview Section */}
+                {twitterUrl &&
+                  !urlError &&
+                  !files.length &&
+                  extractTweetId(twitterUrl) && (
+                    <div className="border rounded-md p-3 h-full">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-medium">
+                          Tweet Preview
+                        </span>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6"
+                          onClick={() => setTwitterUrl("")}
+                          type="button"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <div className="space-y-2 mx-auto w-full">
+                        <ContentPreview twitterUrl={twitterUrl} />
+                      </div>
+                    </div>
+                  )}
+              </div>
+
+              {/* Twitter URL Input Section */}
+              {!files.length && (
+                <div className="space-y-2 mt-6">
+                  <Label htmlFor="twitter-url-mobile" className="text-sm">
                     Or upload from a Tweet link
                   </Label>
-                  <Input
-                    id="twitter-url-mobile"
-                    placeholder="Paste link here"
-                    value={twitterUrl}
-                    onChange={handleTwitterUrlChange}
-                    disabled={files.length > 0}
-                    className={`bg-muted/50 ${urlError ? "border-red-500" : ""}`}
-                  />
-                  {urlError && <p className="text-xs text-red-500">{urlError}</p>}
+                  <div className="relative w-full">
+                    <Input
+                      id="twitter-url-mobile"
+                      placeholder="Paste link here"
+                      value={twitterUrl}
+                      onChange={handleTwitterUrlChange}
+                      disabled={files.length > 0}
+                      className={`bg-muted/50 text-ellipsis ${
+                        urlError ? "border-red-500" : ""
+                      }`}
+                      style={{
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                      }}
+                    />
+                  </div>
+                  {urlError && (
+                    <p className="text-xs text-red-500">{urlError}</p>
+                  )}
                 </div>
+              )}
 
-                <Button
-                  type="submit"
-                  disabled={isSubmitDisabled}
-                  variant={isSubmitDisabled ? "secondary" : "default"}
-                  className="w-full"
-                >
-                  Continue
-                </Button>
-              </div>
-            </div>
-          </form>
+              <Button
+                type="submit"
+                disabled={isSubmitDisabled}
+                variant={isSubmitDisabled ? "secondary" : "default"}
+                className="w-full my-4"
+              >
+                Continue
+              </Button>
+            </form>
+          </>
         ) : (
           <SuccessScreen onClose={handleSuccessDone} />
         )}

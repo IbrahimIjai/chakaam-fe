@@ -67,6 +67,45 @@ export const Icons = {
       />
     </svg>
   ),
+  checkmark: (props: IconProps) => (
+    <svg
+      {...props}
+      width="50"
+      height="50"
+      viewBox="0 0 50 50"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <mask
+        id="mask0_53_207"
+        style={{ maskType: "luminance" }}
+        maskUnits="userSpaceOnUse"
+        x="4"
+        y="3"
+        width="42"
+        height="44"
+      >
+        <path
+          d="M25 4.16675L30.4719 8.15841L37.2458 8.14591L39.326 14.5917L44.8135 18.5626L42.7083 25.0001L44.8135 31.4376L39.326 35.4084L37.2458 41.8542L30.4719 41.8417L25 45.8334L19.5281 41.8417L12.7542 41.8542L10.674 35.4084L5.18646 31.4376L7.29167 25.0001L5.18646 18.5626L10.674 14.5917L12.7542 8.14591L19.5281 8.15841L25 4.16675Z"
+          fill="white"
+          stroke="white"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M17.7083 25.0001L22.9167 30.2084L33.3333 19.7917"
+          stroke="black"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </mask>
+      <g mask="url(#mask0_53_207)">
+        <path d="M0 0H50V50H0V0Z" fill="#6C45FA" />
+      </g>
+    </svg>
+  ),
   background_grid: (props: IconProps) => (
     <svg
       {...props}
