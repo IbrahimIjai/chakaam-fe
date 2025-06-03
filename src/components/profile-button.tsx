@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Icons } from "./icons";
-import { authClient } from "@/lib/auth-client";
+import authClient from "@/lib/auth-client";
 import { useTransition } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { ChevronDown } from "lucide-react";

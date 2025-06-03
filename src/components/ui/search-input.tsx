@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useId, useState } from "react";
-import { LoaderCircleIcon, SearchIcon } from "lucide-react";
-
-import { Input } from "@/components/ui/input";
+import { LoaderCircleIcon } from "lucide-react";
+import { SearchInput as Input } from "@/components/ui/input";
+import { Icons } from "../icons";
 
 export default function SearchInput() {
   const id = useId();
@@ -27,7 +27,7 @@ export default function SearchInput() {
         <Input
           id={id}
           className="peer ps-9 pe-9"
-          placeholder="Search..."
+          placeholder="Search"
           type="search"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
@@ -35,16 +35,15 @@ export default function SearchInput() {
         <div className="text-muted-foreground/80 pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 peer-disabled:opacity-50">
           {isLoading ? (
             <LoaderCircleIcon
-              className="animate-spin"
-              size={16}
+              className="animate-spin text-[#BEBEBE]"
+              size={20}
               role="status"
-              aria-label="Loading..."
+              aria-label="Searching..."
             />
           ) : (
-            <SearchIcon size={16} aria-hidden="true" />
+            <Icons.search />
           )}
         </div>
-      
       </div>
     </div>
   );

@@ -1,9 +1,9 @@
 export const siteConfig = {
   name: "Chakam",
   url: "https://chakam.com",
-  description:
-    "",
+  description: "",
   links: {
     twitter: "https://twitter.com/chakam",
+    bot: "chakam_it",
   },
 };

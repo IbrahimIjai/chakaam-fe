@@ -6,7 +6,7 @@ import { siteConfig } from "@/config/site";
 import { Icons } from "./icons";
 import { Button } from "./ui/button";
 import { useTransition } from "react";
-import { authClient } from "@/lib/auth-client";
+import authClient from "@/lib/auth-client";
 import SearchInput from "./ui/search-input";
 import { ProfileButton } from "./profile-button";
 
@@ -18,8 +18,8 @@ function TwitterSignInButton() {
       try {
         await authClient.signIn.social({
           provider: "twitter",
-          callbackURL: "/chakam", 
-          errorCallbackURL: "/", 
+          callbackURL: "/chakam",
+          errorCallbackURL: "/",
         });
       } catch (error) {
         console.error("Twitter sign-in error:", error);
