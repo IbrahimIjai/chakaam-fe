@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chakam 🧾 — Proof, Preserved Onchain
 
-## Getting Started
+**Chakam** started as a cultural trend on X (formerly Twitter), meaning *"proof"*. When someone says something worth remembering (or calling back), users reply with **“Chakam”** — signaling they've saved the evidence.
 
-First, run the development server:
+Now, it’s an actual app.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ What It Does
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Chakam lets users log in with their **X account**, and submit **tweet links** or **screenshots** as proof.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* 🔗 Tweet links are converted into clean visual snapshots.
+* 🖼️ Screenshots are stored directly.
+* 🌐 All proofs are uploaded to **Lighthouse** (IPFS + Filecoin) for verifiable, decentralized storage.
+* 🧠 Metadata — timestamps, IPFS URIs, user info — is stored in a **Neon PostgreSQL** DB.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Users can:
 
-## Learn More
+* 📁 View all their "Chakams"
+* ⬇️ Download proofs
+* 🔗 Share them with the world
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* **Frontend**: Next.js 15, TailwindCSS, Radix UI
+* **Auth**: better-auth with X OAuth
+* **Tweet rendering**: react-tweet
+* **Storage**: Lighthouse (IPFS + Filecoin)
+* **Database**: Neon + Prisma
+* **Snapshot service**: Custom tweet-to-image rendering
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📦 Repository
 
-## Deploy on Vercel
+This repo is `chakaam-fe` — the frontend of the Chakam app.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> 💡 Backend services, snapshot generator, and cron jobs are in separate internal/private repos.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🚧 Current Focus (WebApp)
+
+→ Weekly updates + commits
+→ Focus: Dashboard polish, snapshot improvements, upload reliability, mobile responsiveness.
+
+## 📎 Want to Try It?
+
+WIP. A public demo will be available soon — follow [@steffqing](https://x.com/steffqing) for updates.
+
+## 📄 License
+
+MIT
