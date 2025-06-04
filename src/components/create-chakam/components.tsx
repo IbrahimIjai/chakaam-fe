@@ -17,7 +17,7 @@ function ImagePreview({ file }: { file: File }) {
   }, [file]);
 
   return (
-    <div className="relative w-full bg-transparent rounded-md overflow-hidden">
+    <div className="relative w-full aspect-square bg-transparent rounded-md overflow-hidden">
       {previewUrl && (
         <img
           src={previewUrl}
