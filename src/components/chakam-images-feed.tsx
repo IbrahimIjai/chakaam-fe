@@ -85,7 +85,7 @@ export function ChakamImagesFeed() {
           content: "This is a tweet!",
         },
       ];
-      setImages(mockTweets);
+      // setImages(mockTweets);
       setLoading(false);
     }, 1000);
 

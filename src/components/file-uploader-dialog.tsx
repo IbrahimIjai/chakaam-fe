@@ -17,7 +17,6 @@ import { ChakamFileUploader } from "./chakam-file-uploader";
 import { useState, useEffect } from "react";
 import { z } from "zod";
 import { X, CheckCircle } from "lucide-react";
-import { Separator } from "./ui/separator";
 import { Icons } from "./icons";
 import { TweetPreview } from "./react-tweet-preview";
 

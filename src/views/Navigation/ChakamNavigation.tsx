@@ -1,7 +1,6 @@
 "use client";
 
 import { Icons } from "@/components/icons";
-import { Input } from "@/components/ui/input";
 import SearchInput from "@/components/ui/search-input";
 import authClient from "@/lib/auth-client";
 import Image from "next/image";
@@ -11,11 +10,11 @@ import { useMediaQuery } from "usehooks-ts";
 export default function ChakamNavigation() {
   const { data } = authClient.useSession();
   const isTablet = useMediaQuery("(min-width: 768px)");
-  console.log(isTablet);
+  console.log(data);
 
   return (
     <nav
-      className="bg-[#F6F6F6] w-full p-6 flex justify-between items-center"
+      className="bg-[#F6F6F6] w-full p-6 flex justify-between items-center max-w-7xl mx-auto"
       style={{ boxShadow: "0px 1px 47.6px 0px #B9B9B940" }}
     >
       <Link href="/" className="mr-4 flex items-center gap-1 lg:mr-6">
