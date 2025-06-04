@@ -176,7 +176,7 @@ export function FileUploaderDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="md:max-w-[650px] lg:max-w-[750px]">
+      <DialogContent className="max-w-[378px] md:max-w-[712.12px]">
         {!showSuccess ? (
           <>
             <DialogHeader className="border-b pb-3">

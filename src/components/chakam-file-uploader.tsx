@@ -35,12 +35,15 @@ export function ChakamFileUploader({
     });
   }, []);
 
-  const handleValueChange = React.useCallback((newFiles: File[]) => {
-    setFiles(newFiles);
-    if (onFilesChange) {
-      onFilesChange(newFiles);
-    }
-  }, [onFilesChange]);
+  const handleValueChange = React.useCallback(
+    (newFiles: File[]) => {
+      setFiles(newFiles);
+      if (onFilesChange) {
+        onFilesChange(newFiles);
+      }
+    },
+    [onFilesChange]
+  );
 
   return (
     <FileUpload
@@ -53,17 +56,15 @@ export function ChakamFileUploader({
       accept="image/jpeg, image/png, image/gif"
       disabled={disabled}
     >
-      <FileUploadDropzone className="border-3 border-dashed rounded-md p-6 cursor-pointer hover:bg-muted/50 transition-colors">
-        <div className="flex flex-col items-center gap-1 text-center">
+      <FileUploadDropzone className="p-6 py-14 cursor-pointer rounded-none border-none dashed-border">
+        <div className="flex flex-col items-center gap-3 text-center">
           <div className="flex items-center justify-center mb-2">
-            <Icons.upload className="h-10 w-10" />
+            <Icons.upload className="h-[25px] w-[25px] md:h-10 md:w-10" />
           </div>
-          <p className="text-muted-foreground text-sm">
+          <p className="text-[#BEBEBE] text-xs md:text-lg font-bold tracking-tighter">
             Drag and drop your file here,
             <br />
-            <span className="text-primary font-medium">
-              or click to browse
-            </span>
+            <span className="text-[#001A3D] underline">or click to browse</span>
           </p>
         </div>
       </FileUploadDropzone>

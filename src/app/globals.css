@@ -155,3 +155,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+.dashed-border {
+  border: 2px solid;
+  border-image-source: url("/mobile-border.svg");
+  border-image-slice: 1;
+  border-image-repeat: round;
+}
+
+@media (min-width: 768px) {
+  .dashed-border {
+    border-image-source: url("/tablet-border.svg");
+  }
+}
