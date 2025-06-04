@@ -10,7 +10,6 @@ import { useMediaQuery } from "usehooks-ts";
 export default function ChakamNavigation() {
   const { data } = authClient.useSession();
   const isTablet = useMediaQuery("(min-width: 768px)");
-  console.log(data);
 
   return (
     <nav

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { extractTweetId } from "./utils";
 import { Tweet } from "react-tweet";
 import { Icons } from "../icons";
@@ -17,38 +17,31 @@ function ImagePreview({ file }: { file: File }) {
   }, [file]);
 
   return (
-    <div className="relative w-full h-48 bg-muted/30 rounded-md overflow-hidden">
-      <img
-        src={previewUrl}
-        alt="Preview"
-        className="w-full h-full object-contain"
-      />
+    <div className="relative w-full bg-transparent rounded-md overflow-hidden">
+      {previewUrl && (
+        <img
+          src={previewUrl}
+          alt="Preview"
+          className="w-full h-full object-contain"
+        />
+      )}
     </div>
   );
 }
 
-function ContentPreview({
-  file,
-  twitterUrl,
-}: {
-  file?: File;
-  twitterUrl?: string;
-}) {
-  const tweetId = twitterUrl ? extractTweetId(twitterUrl) : null;
-
-  if (file) {
-    return <ImagePreview file={file} />;
-  }
-
-  if (tweetId) {
-    return (
-      <div className="border rounded-md p-3 bg-muted/30">
-        <Tweet id={tweetId} />
-      </div>
+function ContentPreview({ content }: { content: File | string }) {
+  const Preview =
+    typeof content === "string" ? (
+      <Tweet id={extractTweetId(content) as string} />
+    ) : (
+      <ImagePreview file={content} />
     );
-  }
 
-  return null;
+  return (
+    <div className="border border-[#6C45FA] bg-[#D9D9D9] rounded-[10px] p-3 [&_*]:m-0">
+      {Preview}
+    </div>
+  );
 }
 
 function SuccessScreen({ onClose }: { onClose: () => void }) {
@@ -63,4 +56,4 @@ function SuccessScreen({ onClose }: { onClose: () => void }) {
   );
 }
 
-export { SuccessScreen, ContentPreview, ImagePreview };
+export { SuccessScreen, ContentPreview };

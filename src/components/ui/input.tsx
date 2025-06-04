@@ -30,7 +30,7 @@ function SearchInput({
       data-slot="input"
       className={cn(
         "text-black bg-[#EDEDED] rounded-[10px] max-w-80 placeholder:text-[#BEBEBE] text-base tracking-tighter placeholder:font-bold disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
-        "w-full pl-10 pr-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#6C45FA]",
+        "w-full pl-10 pr-4 py-2 focus:outline-none focus:ring-[#6C45FA] focus:ring-1",
         "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
         className
       )}

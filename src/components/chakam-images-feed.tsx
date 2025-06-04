@@ -6,6 +6,7 @@ import { Upload } from "lucide-react";
 import { Icons } from "./icons";
 import { FileUploaderDialog } from "./file-uploader-dialog";
 import { ThumbsUp, MessageCircle, RefreshCw, Share2 } from "lucide-react";
+import { CreateChakam } from "./create-chakam";
 
 type Tweet = {
   id: string;
@@ -96,14 +97,14 @@ export function ChakamImagesFeed() {
   if (images.length === 0) {
     return (
       <div className="w-full h-[calc(100vh-80px)] flex items-center justify-center">
-        <FileUploaderDialog>
+        <CreateChakam>
           <div className="border-dashed w-4/5 lg:w-[500px] border-2 rounded-md flex items-center justify-center p-4 h-48">
             <div className="flex flex-col items-center justify-center">
               <Icons.upload className="h-6 w-6" />
               <p className="text-muted-foreground text-sm">Upload Screenshot</p>
             </div>
           </div>
-        </FileUploaderDialog>
+        </CreateChakam>
       </div>
     );
   }

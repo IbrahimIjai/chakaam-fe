@@ -5,7 +5,7 @@ const twitterUrlSchema = z
   .trim()
   .refine(
     (val) => {
-      if (!val) return true;
+      if (!val) return false;
 
       const twitterUrlRegex =
         /^https?:\/\/(?:www\.)?(?:twitter|x)\.com\/(?:#!\/)?[\w\-]+\/status\/\d+(?:\?.*)?$/;
