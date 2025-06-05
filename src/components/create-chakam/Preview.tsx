@@ -38,7 +38,7 @@ export default function PreviewChakam({
   };
 
   const tweetRef = useRef<HTMLDivElement>(null);
-  const { generateFile, isGenerating } = useTweetFile();
+  const { generateFile } = useTweetFile();
 
   const generateScreenshot = async (format: "png" | "jpeg" = "png") => {
     if (!tweetRef.current)
@@ -73,8 +73,6 @@ export default function PreviewChakam({
       await submit(file);
     });
   };
-
-  console.log(isPending, isGenerating);
 
   return (
     <>

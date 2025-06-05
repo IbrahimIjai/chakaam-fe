@@ -5,12 +5,13 @@ import { useState } from "react";
 import PreviewChakam from "./Preview";
 import UploadChakam from "./Upload";
 import { toast } from "sonner";
+import { SuccessScreen } from "./components";
 
 export function CreateChakam({ children }: { children: React.ReactNode }) {
   const [tweet, setTweet] = useState("");
   const [description, setDesc] = useState("");
   const [image, setImage] = useState<File[]>([]);
-  const [preview, setPreview] = useState(false);
+  const [state, setState] = useState<1 | 2 | 3>(1);
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -23,6 +24,7 @@ export function CreateChakam({ children }: { children: React.ReactNode }) {
 
   const handleSuccessDone = () => {
     handleClose();
+    setState(1);
   };
 
   async function submit(file: File) {
@@ -48,7 +50,7 @@ export function CreateChakam({ children }: { children: React.ReactNode }) {
       toast.success(
         "Chakam 📸! Your proof has been successfully stored onchain"
       );
-      handleSuccessDone();
+      setState(3);
     } catch (err) {
       console.error("Error submitting:", err);
       toast.error((err as Error).message);
@@ -62,24 +64,25 @@ export function CreateChakam({ children }: { children: React.ReactNode }) {
         className="max-w-[378px] md:max-w-[712.12px] gap-0"
         showCloseButton={false}
       >
-        {preview ? (
+        {state === 1 ? (
+          <UploadChakam
+            tweet={tweet}
+            setImage={setImage}
+            setTweet={setTweet}
+            image={image}
+            on={() => setState(2)}
+          />
+        ) : state === 2 ? (
           <PreviewChakam
-            off={() => setPreview(false)}
+            off={() => setState(1)}
             setDesc={setDesc}
             desc={description}
             chakam={tweet ? tweet : image[0]}
             submit={submit}
           />
         ) : (
-          <UploadChakam
-            tweet={tweet}
-            setImage={setImage}
-            setTweet={setTweet}
-            image={image}
-            on={() => setPreview(true)}
-          />
+          <SuccessScreen onClose={handleSuccessDone} />
         )}
-        {/* <SuccessScreen onClose={handleSuccessDone} /> */}
       </DialogContent>
     </Dialog>
   );

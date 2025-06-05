@@ -30,15 +30,6 @@ export default function UploadChakam({
     return image.length > 0 || twitterUrlSchema.safeParse(tweet).success;
   }, [image, tweet]);
 
-  console.log(
-    canProceed,
-    image,
-    tweet,
-    "load",
-    image.length > 0,
-    twitterUrlSchema.safeParse(tweet).success
-  );
-
   const handleTwitterUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setTweet(value);

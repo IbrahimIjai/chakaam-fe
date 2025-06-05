@@ -26,7 +26,6 @@ export default function Tweet({ id, className }: SimpleTweetProps) {
       </div>
     );
   }
-  console.log(tweet);
 
   return (
     <div
