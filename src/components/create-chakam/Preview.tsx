@@ -3,16 +3,24 @@
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Dispatch, SetStateAction, useTransition } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import { X } from "lucide-react";
 import { Icons } from "../icons";
 import { SearchInput } from "../ui/input";
 import { ContentPreview } from "./components";
+import useTweetFile from "@/hooks/useTweetFile";
+import { toast } from "sonner";
 
 interface Props {
   chakam: string | File;
   off: () => void;
-  submit: () => Promise<void>;
+  submit: (file: File) => Promise<void>;
   setDesc: Dispatch<SetStateAction<string>>;
   desc: string;
 }
@@ -28,13 +36,46 @@ export default function PreviewChakam({
     const value = e.target.value;
     setDesc(value);
   };
+
+  const tweetRef = useRef<HTMLDivElement>(null);
+  const { generateFile, isGenerating } = useTweetFile();
+
+  const generateScreenshot = async (format: "png" | "jpeg" = "png") => {
+    if (!tweetRef.current)
+      throw new Error("The tweet reference was not captured successfully");
+
+    const file = await generateFile(tweetRef.current, {
+      format,
+      filename: `tweet-${chakam}-${Date.now()}.${format}`,
+    });
+    if (!file)
+      throw new Error(
+        "An unknown error occured in generating screenshot. Check your console for more info"
+      );
+    return file;
+  };
   const [isPending, startTransition] = useTransition();
 
   const handleSubmit = () => {
-    startTransition(() => submit());
+    startTransition(async () => {
+      let file: File;
+      if (typeof chakam === "string") {
+        const screenshot = generateScreenshot();
+        toast.promise(screenshot, {
+          loading: "Generating a screenshot for the tweet...",
+          success: (data) =>
+            `${data.name} has been generated successfully with file size: ${data?.size}! Uploading onchain...`,
+          error: (e: Error) => e.message,
+        });
+        file = await screenshot;
+      } else {
+        file = chakam;
+      }
+      await submit(file);
+    });
   };
 
-  console.log(isPending);
+  console.log(isPending, isGenerating);
 
   return (
     <>
@@ -55,7 +96,7 @@ export default function PreviewChakam({
           </h4>{" "}
         </div>
         <div className="flex-1">
-          <ContentPreview content={chakam} />
+          <ContentPreview content={chakam} tweetRef={tweetRef} />
         </div>
 
         <div className="space-y-3 md:space-y-3.5 mt-5">

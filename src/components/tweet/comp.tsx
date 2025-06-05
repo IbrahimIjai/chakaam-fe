@@ -1,5 +1,6 @@
 import type { MediaDetails, TweetUser } from "react-tweet/api";
 import { Icons } from "../icons";
+import { cn } from "@/lib/utils";
 
 export function TweetSkeleton({ className }: { className?: string }) {
   return (
@@ -25,52 +26,27 @@ export function TweetSkeleton({ className }: { className?: string }) {
 }
 
 export function TweetMedia({ media }: { media: MediaDetails[] }) {
+  const isMore = media.length > 1;
   return (
-    <div className="rounded-2xl overflow-hidden border border-gray-200 grid grid-cols-2 gap-[2px]">
-      {media.map((item, i) => {
-        if (item.type === "photo") {
-          return (
-            <div
-              key={i}
-              className="relative w-full min-w-[200px] aspect-[1/1] bg-gray-100"
-            >
-              <img
-                src={item.media_url_https || "/placeholder.svg"}
-                alt={`Tweet media ${i + 1}`}
-                className="absolute top-0 left-0 w-full h-full object-cover"
-              />
-            </div>
-          );
-        }
-
-        if (item.type === "video" || item.type === "animated_gif") {
-          const videoVariant = item.video_info?.variants.find(
-            (v) => v.content_type === "video/mp4"
-          );
-
-          if (videoVariant?.url) {
-            return (
-              <div
-                key={i}
-                className="relative w-full min-w-[200px] aspect-[1/1] bg-gray-100"
-              >
-                <video
-                  controls={item.type === "video"}
-                  autoPlay={item.type === "animated_gif"}
-                  loop
-                  muted
-                  className="absolute top-0 left-0 w-full h-full object-cover"
-                >
-                  <source src={videoVariant.url} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            );
-          }
-        }
-
-        return null;
-      })}
+    <div
+      className={cn(
+        "rounded-2xl overflow-hidden border border-gray-200",
+        isMore ? "grid grid-cols-2" : ""
+      )}
+    >
+      {media.map((item, i) => (
+        <div
+          key={i}
+          className="relative w-full min-w-[200px] h-auto aspect-video bg-gray-100"
+        >
+          <img
+            src={item.media_url_https || "/placeholder.svg"}
+            alt={`Tweet media ${i + 1}`}
+            className="absolute top-0 left-0 w-full h-full object-fill"
+            crossOrigin="anonymous"
+          />
+        </div>
+      ))}
     </div>
   );
 }

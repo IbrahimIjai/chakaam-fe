@@ -7,14 +7,6 @@ interface TweetFileOptions {
   format?: "png" | "jpeg";
   quality?: number;
   filename?: string;
-  uploadEndpoint?: string;
-}
-
-interface UploadResponse {
-  success: boolean;
-  url?: string;
-  id?: string;
-  message?: string;
 }
 
 export default function useTweetFile() {

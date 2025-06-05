@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { FileImage } from "lucide-react";
+import { Download, FileImage } from "lucide-react";
 import Tweet from "./";
 import useTweetFile from "@/hooks/useTweetFile";
 
@@ -41,6 +41,19 @@ export default function TweetFileManager({ tweetId, className }: Props) {
       };
 
       setSelectedFile(newFile);
+      return file;
+    }
+  };
+  console.log(selectedFile);
+  const handleDownload = async (format: "png" | "jpeg" = "png") => {
+    const file = await handleGenerate(format);
+    if (file) {
+      const url = URL.createObjectURL(file);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = file.name;
+      link.click();
+      URL.revokeObjectURL(url);
     }
   };
 
@@ -70,6 +83,16 @@ export default function TweetFileManager({ tweetId, className }: Props) {
         >
           <FileImage className="w-4 h-4" />
           Generate JPEG
+        </Button>
+        <Button
+          onClick={() => handleDownload("png")}
+          variant="outline"
+          size="sm"
+          disabled={isGenerating}
+          className="gap-2"
+        >
+          <Download className="w-4 h-4" />
+          Download
         </Button>
       </div>
     </div>

@@ -24,16 +24,14 @@ export function CreateChakam({ children }: { children: React.ReactNode }) {
     handleClose();
   };
 
-  async function submit() {
+  async function submit(file: File) {
     try {
       const formData = new FormData();
 
-      if (image.length > 0) {
-        formData.append("image", image[0]);
-      }
+      formData.append("image", file);
+      formData.append("description", description);
 
       if (tweet) formData.append("tweet", tweet);
-      formData.append("description", description);
 
       const res = await fetch("/api/chakam", {
         method: "POST",
@@ -46,7 +44,7 @@ export function CreateChakam({ children }: { children: React.ReactNode }) {
         throw new Error(json.error || "Something went wrong");
       }
 
-      console.log("Success:", json);
+      console.log("Success:", json.data);
       handleSuccessDone();
     } catch (err: any) {
       console.error("Error submitting:", err.message);
