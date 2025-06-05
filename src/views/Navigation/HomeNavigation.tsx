@@ -3,15 +3,8 @@
 import Link from "next/link";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { createContext, useContext, useTransition } from "react";
-import authClient from "@/lib/auth-client";
+import { createContext, useContext } from "react";
 import { cn } from "@/lib/utils";
-
-interface Props {
-  loading: boolean;
-  session: boolean;
-  handleSignIn: () => void;
-}
 
 export function TwitterSignInButton({ className }: { className?: string }) {
   const { session, loading, handleSignIn } = useContext(AuthenticationContext);
