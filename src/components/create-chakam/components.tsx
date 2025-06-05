@@ -53,10 +53,12 @@ function ContentPreview({ content, tweetRef }: ContentPreviewProps) {
 
 function SuccessScreen({ onClose }: { onClose: () => void }) {
   return (
-    <div className="py-8 flex flex-col items-center justify-center space-y-6">
+    <div className="py-10 flex flex-col items-center justify-center space-y-6">
       <Icons.checkmark className="h-[35px] w-[35px] md:h-[50px] md:w-[50px]" />
       <h2 className="text-lg font-bold text-center">Upload Successful!</h2>
-      <Button onClick={onClose}>Check it out!</Button>
+      <Button onClick={onClose} className="w-full">
+        Check it out!
+      </Button>
     </div>
   );
 }

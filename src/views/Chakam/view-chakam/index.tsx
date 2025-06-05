@@ -18,7 +18,8 @@ export function ViewChakam({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent
-        className="max-w-[278px] md:max-w-[380px] gap-0"
+        // className="max-w-[278px] md:max-w-[380px] gap-0"
+        className="max-w-[378px] md:max-w-[712.12px] gap-0"
         showCloseButton={false}
       >
         <PreviewChakam chakam={chakam} />
