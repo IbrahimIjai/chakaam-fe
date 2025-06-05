@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useTransition } from "react";
+// import { useTransition } from "react";
 import { Download, Share2, X } from "lucide-react";
 import { Chakam } from "../../../../generated/prisma";
 import Image from "next/image";
@@ -11,7 +11,7 @@ import { formatDateTime } from "@/components/tweet/utils";
 const HOST = "https://gateway.lighthouse.storage/ipfs/";
 
 export default function PreviewChakam({ chakam }: { chakam: Chakam }) {
-  const [isPending, startTransition] = useTransition();
+  // const [isPending, startTransition] = useTransition();
 
   return (
     <>
@@ -45,13 +45,13 @@ export default function PreviewChakam({ chakam }: { chakam: Chakam }) {
         <div className="flex gap-[14px] w-full my-4 justify-center">
           <Button
             className="w-40 px-[45px] py-3"
-            loading={isPending}
+            // loading={isPending}
             variant="outline"
           >
             <Share2 />
             Share link
           </Button>
-          <Button className="w-40 px-[45px] py-3" loading={isPending}>
+          <Button className="w-40 px-[45px] py-3">
             <Download />
             Download
           </Button>

@@ -3,45 +3,35 @@
 import Link from "next/link";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
-import { useTransition } from "react";
+import { createContext, useContext, useTransition } from "react";
 import authClient from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 
+interface Props {
+  loading: boolean;
+  session: boolean;
+  handleSignIn: () => void;
+}
+
 export function TwitterSignInButton({ className }: { className?: string }) {
-  const [isPending, startTransition] = useTransition();
-  const { data: session } = authClient.useSession();
-
-  const handleSignIn = () => {
-    startTransition(async () => {
-      try {
-        await authClient.signIn.social({
-          provider: "twitter",
-          callbackURL: "/chakam",
-          errorCallbackURL: "/",
-        });
-      } catch (error) {
-        console.error("Twitter sign-in error:", error);
-      }
-    });
-  };
-
+  const { session, loading, handleSignIn } = useContext(AuthenticationContext);
   const styles =
     "text-sm md:text-lg py-[12px] px-[21px] md:py-[17px] md:px-[32px] text-[#E6F7FF] tracking-tighter rounded-[10px]";
 
   if (session) {
     return (
-      <Button asChild className={cn(styles, className)}>
-        <Link href="/chakam">Chakam</Link>;
+      <Button className={cn(styles, className)}>
+        <Link href="/chakam">Chakam</Link>
       </Button>
     );
   }
   return (
     <Button
       onClick={handleSignIn}
-      disabled={isPending}
+      disabled={loading}
       className={cn(styles, className)}
     >
-      {isPending ? "Signing in..." : "Log in with X"}
+      {loading ? "Signing in..." : "Log in with X"}
     </Button>
   );
 }
@@ -58,3 +48,9 @@ export function HomeNavigation() {
     </nav>
   );
 }
+
+export const AuthenticationContext = createContext({
+  loading: false,
+  session: false,
+  handleSignIn: () => {},
+});

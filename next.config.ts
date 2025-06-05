@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
       new URL("https://gateway.lighthouse.storage/ipfs/**"),
     ],
   },
+  // experimental: {
+  //   nodeMiddleware: true,
+  // },
 };
 
 export default nextConfig;

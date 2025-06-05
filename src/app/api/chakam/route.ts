@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
     const session = await auth.api.getSession({ headers: req.headers });
     if (!session)
       return NextResponse.json(
-        { error: "No active session found" },
+        { error: "You are not signed in and cannot access this page" },
         { status: 401 }
       );
     const chakams = await prisma.chakam.findMany({

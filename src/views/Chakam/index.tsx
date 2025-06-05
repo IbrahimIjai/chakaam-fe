@@ -44,11 +44,8 @@ export default function ChakamView({ chakam }: Props) {
         </CreateChakam>
 
         {chakam!.map((chakam) => (
-          <ViewChakam chakam={chakam}>
-            <div
-              key={chakam.id}
-              className="border rounded-md p-3 h-48 relative w-full"
-            >
+          <ViewChakam chakam={chakam} key={chakam.id}>
+            <div className="border rounded-md p-3 h-48 relative w-full">
               <Image
                 src={HOST + chakam.image}
                 alt={chakam.description}

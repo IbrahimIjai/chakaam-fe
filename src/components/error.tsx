@@ -1,5 +1,6 @@
 import { AlertTriangle } from "lucide-react";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 export default function FullPageError({ message }: { message: string }) {
   return (
@@ -9,12 +10,14 @@ export default function FullPageError({ message }: { message: string }) {
         Something went wrong
       </h1>
       <p className="text-gray-600 mb-6 max-w-md">{message}</p>
-      <Link
-        href="/"
-        className="text-sm text-blue-600 hover:underline transition"
-      >
-        Go back home
-      </Link>
+      <Button variant="link">
+        <Link
+          href="/"
+          className="text-sm text-blue-600 hover:underline transition"
+        >
+          Go back home
+        </Link>
+      </Button>
     </div>
   );
 }
