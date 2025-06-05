@@ -13,7 +13,7 @@ export default function TweetUpload({ setTweetUrl, disabled, tweet }: Props) {
       placeholder="Paste link here"
       onChange={setTweetUrl}
       disabled={disabled}
-      className="px-4 w-full max-w-full bg-[#F8F8F8] placeholder:text-xs text-[#BEBEBE] tracking-tighter placeholder:tracking-tighter rounded-[5px]"
+      className="px-4 w-full max-w-full bg-[#F8F8F8] placeholder:text-xs text-[#000] tracking-tighter placeholder:tracking-tighter rounded-[5px]"
       value={tweet}
     />
   );

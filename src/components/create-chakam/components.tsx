@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { extractTweetId } from "./utils";
-import { Tweet } from "react-tweet";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
-import ResponsiveTweet from "../react-tweet-preview";
+import Tweet from "../tweet";
 
 function ImagePreview({ file }: { file: File }) {
   const [previewUrl, setPreviewUrl] = useState("");
@@ -33,13 +32,17 @@ function ImagePreview({ file }: { file: File }) {
 function ContentPreview({ content }: { content: File | string }) {
   const Preview =
     typeof content === "string" ? (
-      <ResponsiveTweet id={extractTweetId(content) as string} />
+      <Tweet id={extractTweetId(content) as string} />
     ) : (
       <ImagePreview file={content} />
     );
 
   return (
-    <div className="border border-[#6C45FA] bg-[#D9D9D9] rounded-[10px] p-3 [&_*]:m-0 flex items-center justify-center">
+    // <div className="h-[400px] overflow-y-auto">
+    //   <div className="flex items-center justify-center h-full">{Preview}</div>
+    // </div>
+
+    <div className="border border-[#6C45FA] bg-[#D9D9D9] rounded-[10px] p-3 h-[400px] flex items-center justify-center overflow-y-auto">
       {Preview}
     </div>
   );
