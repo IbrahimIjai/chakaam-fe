@@ -62,6 +62,7 @@ export function CreateChakam({ children }: { children: React.ReactNode }) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent
         className="max-w-[378px] md:max-w-[712.12px] gap-0"
+        // className="max-w-[278px] md:max-w-[380px] gap-0"
         showCloseButton={false}
       >
         {state === 1 ? (

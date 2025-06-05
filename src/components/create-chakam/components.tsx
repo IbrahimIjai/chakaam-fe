@@ -45,7 +45,7 @@ function ContentPreview({ content, tweetRef }: ContentPreviewProps) {
     );
 
   return (
-    <div className="border border-[#6C45FA] bg-[#D9D9D9] rounded-[10px] p-3 h-[400px] flex items-center justify-center overflow-y-auto">
+    <div className="border border-[#6C45FA] bg-[#D9D9D9] rounded-[10px] p-3 max-h-[400px] flex items-center justify-center overflow-y-auto">
       {Preview}
     </div>
   );

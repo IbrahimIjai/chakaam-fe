@@ -2,6 +2,7 @@ import { CreateChakam } from "@/components/create-chakam";
 import { Chakam } from "../../../generated/prisma";
 import { Icons } from "@/components/icons";
 import Image from "next/image";
+import { ViewChakam } from "./view-chakam";
 
 interface Props {
   chakam: Chakam[] | undefined;
@@ -44,15 +45,20 @@ export default function ChakamView({ chakam, loading }: Props) {
           </div>
         </CreateChakam>
 
-        {chakam!.map(({ id, image, description }) => (
-          <div key={id} className="border rounded-md p-3 h-48 relative w-full">
-            <Image
-              src={HOST + image}
-              alt={description}
-              className="object-contain"
-              fill
-            />
-          </div>
+        {chakam!.map((chakam) => (
+          <ViewChakam chakam={chakam}>
+            <div
+              key={chakam.id}
+              className="border rounded-md p-3 h-48 relative w-full"
+            >
+              <Image
+                src={HOST + chakam.image}
+                alt={chakam.description}
+                className="object-contain"
+                fill
+              />
+            </div>
+          </ViewChakam>
         ))}
       </div>
     </div>
