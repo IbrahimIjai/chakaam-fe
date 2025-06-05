@@ -3,6 +3,7 @@ import { extractTweetId } from "./utils";
 import { Tweet } from "react-tweet";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
+import ResponsiveTweet from "../react-tweet-preview";
 
 function ImagePreview({ file }: { file: File }) {
   const [previewUrl, setPreviewUrl] = useState("");
@@ -17,7 +18,7 @@ function ImagePreview({ file }: { file: File }) {
   }, [file]);
 
   return (
-    <div className="relative w-full aspect-square bg-transparent rounded-md overflow-hidden">
+    <div className="relative w-full aspect-square max-h-50 bg-transparent rounded-md overflow-hidden">
       {previewUrl && (
         <img
           src={previewUrl}
@@ -32,13 +33,13 @@ function ImagePreview({ file }: { file: File }) {
 function ContentPreview({ content }: { content: File | string }) {
   const Preview =
     typeof content === "string" ? (
-      <Tweet id={extractTweetId(content) as string} />
+      <ResponsiveTweet id={extractTweetId(content) as string} />
     ) : (
       <ImagePreview file={content} />
     );
 
   return (
-    <div className="border border-[#6C45FA] bg-[#D9D9D9] rounded-[10px] p-3 [&_*]:m-0">
+    <div className="border border-[#6C45FA] bg-[#D9D9D9] rounded-[10px] p-3 [&_*]:m-0 flex items-center justify-center">
       {Preview}
     </div>
   );

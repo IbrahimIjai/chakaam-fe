@@ -24,7 +24,35 @@ export function CreateChakam({ children }: { children: React.ReactNode }) {
     handleClose();
   };
 
-  async function submit() {}
+  async function submit() {
+    try {
+      const formData = new FormData();
+
+      if (image.length > 0) {
+        formData.append("image", image[0]);
+      }
+
+      if (tweet) formData.append("tweet", tweet);
+      formData.append("description", description);
+
+      const res = await fetch("/api/chakam", {
+        method: "POST",
+        body: formData,
+      });
+
+      const json = await res.json();
+
+      if (!res.ok) {
+        throw new Error(json.error || "Something went wrong");
+      }
+
+      console.log("Success:", json);
+      handleSuccessDone();
+    } catch (err: any) {
+      console.error("Error submitting:", err.message);
+      // Optionally show a toast or UI error
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

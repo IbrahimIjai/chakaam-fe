@@ -1,10 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChakamFileUploader } from "./chakam-file-uploader";
-import { Upload } from "lucide-react";
 import { Icons } from "./icons";
-import { FileUploaderDialog } from "./file-uploader-dialog";
 import { ThumbsUp, MessageCircle, RefreshCw, Share2 } from "lucide-react";
 import { CreateChakam } from "./create-chakam";
 
@@ -118,14 +115,14 @@ export function ChakamImagesFeed() {
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        <FileUploaderDialog>
+        <CreateChakam>
           <div className="border-dashed border-2 rounded-md flex items-center justify-center p-4 h-48">
             <div className="flex flex-col items-center justify-center">
               <Icons.upload className="h-6 w-6" />
               <p className="text-muted-foreground text-sm">Upload Screenshot</p>
             </div>
           </div>
-        </FileUploaderDialog>
+        </CreateChakam>
 
         {/* Tweet cards */}
         {images.map((tweet) => (

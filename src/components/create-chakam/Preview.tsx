@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useTransition } from "react";
 import { X } from "lucide-react";
 import { Icons } from "../icons";
 import { SearchInput } from "../ui/input";
@@ -12,7 +12,7 @@ import { ContentPreview } from "./components";
 interface Props {
   chakam: string | File;
   off: () => void;
-  submit: () => void;
+  submit: () => Promise<void>;
   setDesc: Dispatch<SetStateAction<string>>;
   desc: string;
 }
@@ -28,6 +28,14 @@ export default function PreviewChakam({
     const value = e.target.value;
     setDesc(value);
   };
+  const [isPending, startTransition] = useTransition();
+
+  const handleSubmit = () => {
+    startTransition(() => submit());
+  };
+
+  console.log(isPending);
+
   return (
     <>
       <DialogHeader className="p-5 border-b border-[#EDEDED] flex justify-between flex-row">
@@ -69,8 +77,9 @@ export default function PreviewChakam({
 
         <Button
           className="w-full my-4"
-          onClick={submit}
+          onClick={handleSubmit}
           disabled={Boolean(!desc)}
+          loading={isPending}
         >
           Continue
         </Button>

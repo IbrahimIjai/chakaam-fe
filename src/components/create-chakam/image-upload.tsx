@@ -19,8 +19,7 @@ export default function ImageUpload({
   const [files, setFiles] = useState<File[]>(currentFile);
 
   const onFileReject = (file: File, message: string) => {
-    console.log("File not accepted");
-    toast(message, {
+    toast.error(message, {
       description: `"${
         file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name
       }" has been rejected`,
@@ -62,7 +61,14 @@ export default function ImageUpload({
           <p className="text-[#BEBEBE] text-xs md:text-lg font-bold tracking-tighter">
             {hasFile ? files[0].name : "Drag and drop your file here,"}
             <br />
-            <span className="text-[#001A3D] underline" onClick={removeFile}>
+            <span
+              className="text-[#001A3D] underline"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                removeFile();
+              }}
+            >
               {hasFile ? "Remove" : "or click to browse"}
             </span>
           </p>
