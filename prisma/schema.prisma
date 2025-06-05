@@ -75,9 +75,10 @@ model Verification {
 }
 
 model Chakam {
-  id     String  @id
-  tweet  String? @unique
-  image  String
-  userId String
-  user   User    @relation(fields: [userId], references: [id])
+  id          String  @id @default(cuid())
+  tweet       String? @unique
+  image       String  @unique
+  description String
+  userId      String
+  user        User    @relation(fields: [userId], references: [id])
 }

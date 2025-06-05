@@ -63,8 +63,7 @@ export default function PreviewChakam({
         const screenshot = generateScreenshot();
         toast.promise(screenshot, {
           loading: "Generating a screenshot for the tweet...",
-          success: (data) =>
-            `${data.name} has been generated successfully with file size: ${data?.size}! Uploading onchain...`,
+          success: `Successfully generated screenshot!`,
           error: (e: Error) => e.message,
         });
         file = await screenshot;
@@ -111,7 +110,8 @@ export default function PreviewChakam({
               type="text"
               placeholder="This makes it easier to search"
               onChange={setDescription}
-              className="px-4 w-full max-w-full bg-[#F8F8F8] placeholder:text-xs text-[#BEBEBE] tracking-tighter placeholder:tracking-tighter rounded-[5px]"
+              value={desc}
+              className="px-4 w-full max-w-full bg-[#F8F8F8] placeholder:text-xs text-[#000] tracking-tighter placeholder:tracking-tighter rounded-[5px]"
             />
           </div>
         </div>

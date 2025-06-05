@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useState } from "react";
 import PreviewChakam from "./Preview";
 import UploadChakam from "./Upload";
+import { toast } from "sonner";
 
 export function CreateChakam({ children }: { children: React.ReactNode }) {
   const [tweet, setTweet] = useState("");
@@ -44,11 +45,13 @@ export function CreateChakam({ children }: { children: React.ReactNode }) {
         throw new Error(json.error || "Something went wrong");
       }
 
-      console.log("Success:", json.data);
+      toast.success(
+        "Chakam 📸! Your proof has been successfully stored onchain"
+      );
       handleSuccessDone();
-    } catch (err: any) {
-      console.error("Error submitting:", err.message);
-      // Optionally show a toast or UI error
+    } catch (err) {
+      console.error("Error submitting:", err);
+      toast.error((err as Error).message);
     }
   }
 
