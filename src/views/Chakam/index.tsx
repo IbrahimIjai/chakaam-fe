@@ -6,13 +6,11 @@ import { ViewChakam } from "./view-chakam";
 
 interface Props {
   chakam: Chakam[] | undefined;
-  loading: boolean;
 }
 
 const HOST = "https://gateway.lighthouse.storage/ipfs/";
 
-export default function ChakamView({ chakam, loading }: Props) {
-  if (loading) return <div>Please wait...</div>;
+export default function ChakamView({ chakam }: Props) {
   if (chakam && chakam.length === 0) {
     return (
       <div className="w-full h-[calc(100vh-80px)] flex items-center justify-center">

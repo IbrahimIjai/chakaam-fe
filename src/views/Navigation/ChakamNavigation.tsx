@@ -24,7 +24,7 @@ export default function ChakamNavigation() {
         />
       </Link>
       <aside className="flex gap-[10px]">
-        {isTablet && <SearchInput />}
+        {isTablet ? <SearchInput /> : <></>}
         <div
           className="flex items-center gap-1 p-1 rounded-[10px] border border-dashed border-[#BEBEBE]"
           onClick={() => alert("Function not implemented yet!")}
