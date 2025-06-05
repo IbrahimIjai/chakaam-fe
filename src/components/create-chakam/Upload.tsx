@@ -4,12 +4,10 @@ import { Button } from "@/components/ui/button";
 import { DialogClose, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Dispatch, SetStateAction, useMemo } from "react";
-import { z } from "zod";
 import { X } from "lucide-react";
 import { twitterUrlSchema } from "./utils";
 import ImageUpload from "./image-upload";
 import TweetUpload from "./tweet-upload";
-import { toast } from "sonner";
 
 interface Props {
   tweet: string;

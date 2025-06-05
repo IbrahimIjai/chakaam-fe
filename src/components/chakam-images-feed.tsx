@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Icons } from "./icons";
 import { ThumbsUp, MessageCircle, RefreshCw, Share2 } from "lucide-react";
 import { CreateChakam } from "./create-chakam";
@@ -16,8 +16,7 @@ type Tweet = {
 };
 
 export function ChakamImagesFeed() {
-  const [images, setImages] = useState<Tweet[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [images] = useState<Tweet[]>([]);
 
   // Empty state - show uploader in the center
   if (images.length === 0) {

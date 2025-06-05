@@ -11,7 +11,10 @@ export async function GET(req: NextRequest) {
         { error: "No active session found" },
         { status: 401 }
       );
-    return NextResponse.json({ data: session });
+    const chakams = await prisma.chakam.findMany({
+      where: { userId: session.user.id },
+    });
+    return NextResponse.json({ data: chakams });
   } catch (error) {
     console.error("Error in Chakam GET", error);
     return NextResponse.json(
